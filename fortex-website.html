@@ -1385,7 +1385,7 @@
           <p data-i18n="ben_w1_d">显著降低背部肌肉负荷，减少慢性疲劳和职业性肌肉骨骼损伤风险。让工人下班后还有精力陪伴家人。</p>
           <div class="ben-metrics">
             <div class="ben-metric"><b>~20%</b><span data-i18n="ben_w1_m1">肌肉负荷降低</span></div>
-            <div class="ben-metric"><b>1周</b><span data-i18n="ben_w1_m2">适应期缩短</span></div>
+            <div class="ben-metric"><b data-i18n="ben_w1_m2_v">1wk</b><span data-i18n="ben_w1_m2">适应期缩短</span></div>
           </div>
         </div>
         <div class="ben-item">
@@ -1427,7 +1427,7 @@
       <div class="price-row">
         <div class="price-card">
           <div class="price-label" data-i18n="p_rent_l">租赁方案</div>
-          <div class="price-amount">$38<span style="font-size:16px;color:var(--text-3);">/月</span></div>
+          <div class="price-amount">$38<span style="font-size:16px;color:var(--text-3);" data-i18n="p_rent_unit">/mo</span></div>
           <div class="price-unit" data-i18n="p_rent_u">先试后买 · 灵活低门槛</div>
           <ul>
             <li data-i18n="p_rent_f1">最低门槛，降低试错风险</li>
@@ -1438,7 +1438,7 @@
         </div>
         <div class="price-card featured">
           <div class="price-label" data-i18n="p_buy_l">标准采购</div>
-          <div class="price-amount">$292<span style="font-size:16px;color:var(--text-3);">/台</span></div>
+          <div class="price-amount">$292<span style="font-size:16px;color:var(--text-3);" data-i18n="p_buy_unit">/unit</span></div>
           <div class="price-unit" data-i18n="p_buy_u">一次性买断 · 12-18个月回本</div>
           <ul>
             <li data-i18n="p_buy_f1">含质检与保修</li>
@@ -1449,7 +1449,7 @@
         </div>
         <div class="price-card">
           <div class="price-label" data-i18n="p_pilot_l">试点合作</div>
-          <div class="price-amount">$200<span style="font-size:16px;color:var(--text-3);">/台</span></div>
+          <div class="price-amount">$200<span style="font-size:16px;color:var(--text-3);" data-i18n="p_pilot_unit">/unit</span></div>
           <div class="price-unit" data-i18n="p_pilot_u">灯塔工厂专属 · 限额招募</div>
           <ul>
             <li data-i18n="p_pilot_f1">首批试点专属价格</li>
@@ -1601,7 +1601,7 @@
         ben_lead: "对工人：保护健康、减轻疲劳。对企业：提升产能、降低工伤风险、强化ESG。一次投入，双向受益。",
         ben_w1_tag: "对工人", ben_w1_t: "保护工人健康",
         ben_w1_d: "显著降低背部肌肉负荷，减少慢性疲劳和职业性肌肉骨骼损伤风险。让工人下班后还有精力陪伴家人。",
-        ben_w1_m1: "肌肉负荷降低", ben_w1_m2: "适应期缩短",
+        ben_w1_m1: "肌肉负荷降低", ben_w1_m2: "适应期缩短", ben_w1_m2_v: "1周",
         ben_e1_tag: "对企业", ben_e1_t: "提升产能与效率",
         ben_e1_d: "缓解\"下午低谷\"效应，维持全天稳定产出。减少因疲劳导致的效率下降和次品率上升。",
         ben_e1_m1: "产能损失减少", ben_e1_m2: "次/天适用",
@@ -1613,13 +1613,13 @@
         ben_e2_m1: "工伤率目标", ben_e2_m2: "指标提升",
         price_title: '简洁<span class="green">定价</span>',
         price_lead: "灵活的采购方式，适配不同规模和预算。批量采购享阶梯折扣，也可先租后买降低试错成本。",
-        p_rent_l: "租赁方案", p_rent_u: "先试后买 · 灵活低门槛",
+        p_rent_l: "租赁方案", p_rent_u: "先试后买 · 灵活低门槛", p_rent_unit: "/月",
         p_rent_f1: "最低门槛，降低试错风险", p_rent_f2: "先验证效果再扩大规模",
         p_rent_f3: "含基础维护与更换服务", p_rent_f4: "可随时转为采购模式",
-        p_buy_l: "标准采购", p_buy_u: "一次性买断 · 12-18个月回本",
+        p_buy_l: "标准采购", p_buy_u: "一次性买断 · 12-18个月回本", p_buy_unit: "/台",
         p_buy_f1: "含质检与保修", p_buy_f2: "5-10台享5%折扣",
         p_buy_f3: "10-50台享10%折扣", p_buy_f4: "50台以上享15%折扣",
-        p_pilot_l: "试点合作", p_pilot_u: "灯塔工厂专属 · 限额招募",
+        p_pilot_l: "试点合作", p_pilot_u: "灯塔工厂专属 · 限额招募", p_pilot_unit: "/台",
         p_pilot_f1: "首批试点专属价格", p_pilot_f2: "联合品牌案例研究",
         p_pilot_f3: "ESG报告数据支持", p_pilot_f4: "优先获得产品迭代升级",
         tr_title: '已验证的<span class="green">市场进展</span>',
@@ -1681,7 +1681,7 @@
         ben_lead: "For workers: protect health, reduce fatigue. For enterprises: boost productivity, reduce injury risk, strengthen ESG. One investment, dual benefits.",
         ben_w1_tag: "FOR THE WORKER", ben_w1_t: "Protect Worker Health",
         ben_w1_d: "Significantly reduces back muscle load, mitigating chronic fatigue and occupational MSD risk. Workers go home with energy for their families.",
-        ben_w1_m1: "Muscle Load Reduction", ben_w1_m2: "Faster Adaptation",
+        ben_w1_m1: "Muscle Load Reduction", ben_w1_m2: "Faster Adaptation", ben_w1_m2_v: "1wk",
         ben_e1_tag: "FOR THE ENTERPRISE", ben_e1_t: "Boost Productivity",
         ben_e1_d: "Mitigates \"afternoon dip\" effect, maintains stable all-day output. Reduces efficiency loss and defect rate caused by fatigue.",
         ben_e1_m1: "Productivity Loss Reduced", ben_e1_m2: "Lifts/day Fit",
@@ -1693,13 +1693,13 @@
         ben_e2_m1: "Injury Rate Target", ben_e2_m2: "ESG Boost",
         price_title: 'Simple <span class="green">Pricing</span>',
         price_lead: "Flexible purchasing options for different scales and budgets. Volume discounts available, or try-before-you-buy with rental.",
-        p_rent_l: "RENTAL", p_rent_u: "Try before buy · Low barrier",
+        p_rent_l: "RENTAL", p_rent_u: "Try before buy · Low barrier", p_rent_unit: "/mo",
         p_rent_f1: "Lowest entry barrier, reduce trial risk", p_rent_f2: "Validate results before scaling",
         p_rent_f3: "Includes basic maintenance & replacement", p_rent_f4: "Can convert to purchase anytime",
-        p_buy_l: "STANDARD PURCHASE", p_buy_u: "One-time buy · 12-18mo payback",
+        p_buy_l: "STANDARD PURCHASE", p_buy_u: "One-time buy · 12-18mo payback", p_buy_unit: "/unit",
         p_buy_f1: "Includes QC & warranty", p_buy_f2: "5-10 units: 5% discount",
         p_buy_f3: "10-50 units: 10% discount", p_buy_f4: "50+ units: 15% discount",
-        p_pilot_l: "PILOT PARTNERSHIP", p_pilot_u: "Lighthouse factory exclusive · Limited",
+        p_pilot_l: "PILOT PARTNERSHIP", p_pilot_u: "Lighthouse factory exclusive · Limited", p_pilot_unit: "/unit",
         p_pilot_f1: "Exclusive pilot pricing", p_pilot_f2: "Co-branding case study",
         p_pilot_f3: "ESG reporting data support", p_pilot_f4: "Priority access to upgrades",
         tr_title: 'Proven <span class="green">Traction</span>',

@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FORTEX · The Invisible Strength</title>
+  <meta name="description" content="Fortex被动式软体外骨骼 — 面向制造业一线工人的轻量化人体工学装备。<1.5kg, ~20%减载, 零电池零维护。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080b0a;
+      --bg-2: #0d1311;
+      --bg-3: #121917;
+      --surface: rgba(255,255,255,.04);
+      --surface-2: rgba(255,255,255,.07);
+      --line: rgba(255,255,255,.1);
+      --line-2: rgba(255,255,255,.06);
+      --text: #f0ede4;
+      --text-2: rgba(240,237,228,.62);
+      --text-3: rgba(240,237,228,.38);
+      --accent: #d4ff3d;
+      --accent-2: #7df5c9;
+      --accent-dim: rgba(212,255,61,.14);
+      --danger: #ff6b6b;
+      --warn: #ffc94d;
+      --ok: #5eea8f;
+      --dark: #050807;
+      --font-display: "Sora", "PingFang SC", system-ui, sans-serif;
+      --font-body: "DM Sans", "PingFang SC", system-ui, sans-serif;
+      --r-xl: 28px;
+      --r-lg: 20px;
+      --r-md: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 0%, rgba(212,255,61,.07), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 10%, rgba(125,245,201,.05), transparent 55%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .035;
+      background-image:
+        linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border: 0; cursor: pointer; background: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .shell {
+      width: min(1320px, calc(100vw - 40px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(8,11,10,.72);
+      border-bottom: 1px solid var(--line);
+      transition: transform .4s ease;
+    }
+
+    .header-inner {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-img {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo small {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 10px;
+      color: var(--text-2);
+      letter-spacing: .04em;
+      margin-top: 2px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .nav button {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-2);
+      font-size: 13px;
+      font-weight: 500;
+      transition: .25s ease;
+      white-space: nowrap;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang {
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .lang button {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-2);
+      transition: .25s ease;
+    }
+
+    .lang button.on {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .btn-cta {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 13px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      white-space: nowrap;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(212,255,61,.25);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 100px 0 60px;
+    }
+
+    .hero-left {
+      max-width: 600px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,61,.2);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      animation: fadeUp .8s .1s ease both;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6.8vw, 104px);
+      line-height: .9;
+      letter-spacing: -.06em;
+      font-weight: 700;
+      margin: 22px 0;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    .hero h1 .green { color: var(--accent); }
+    .hero h1 .thin { font-weight: 300; }
+
+    .hero-desc {
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.6;
+      color: var(--text-2);
+      max-width: 500px;
+      animation: fadeUp .8s .3s ease both;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+      animation: fadeUp .8s .4s ease both;
+    }
+
+    .meta-item {
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    .meta-item b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--accent);
+    }
+
+    .meta-item span {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+      animation: fadeUp .8s .5s ease both;
+    }
+
+    .btn {
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-fill {
+      background: var(--accent);
+      color: var(--dark);
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .btn-fill:hover {
+      box-shadow: 0 12px 28px rgba(212,255,61,.3);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero visual — product image */
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 1s .3s ease both;
+    }
+
+    .product-stage {
+      position: relative;
+      border-radius: var(--r-xl);
+      background:
+        radial-gradient(ellipse 65% 70% at 50% 45%, rgba(212,255,61,.08), transparent 65%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid var(--line);
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(212,255,61,.06), transparent 40%);
+      pointer-events: none;
+    }
+
+    .product-img {
+      width: 82%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 50px rgba(212,255,61,.12)) drop-shadow(0 8px 20px rgba(0,0,0,.4));
+      transition: transform .6s cubic-bezier(.22,1,.36,1);
+    }
+
+    .hero-visual:hover .product-img {
+      transform: scale(1.03);
+    }
+
+    .stage-tag {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(212,255,61,.12);
+      border: 1px solid rgba(212,255,61,.25);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .06em;
+    }
+
+    .stage-label {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: .04em;
+    }
+
+    .hero-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .spec-chip {
+      padding: 12px;
+      border-radius: var(--r-md);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .spec-chip b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--accent);
+    }
+
+    .spec-chip span {
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 80px 0;
+    }
+
+    .sec-head {
+      margin-bottom: 40px;
+      max-width: 640px;
+    }
+
+    .sec-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.2vw, 60px);
+      line-height: .95;
+      letter-spacing: -.05em;
+      font-weight: 700;
+    }
+
+    .sec-head h2 .green { color: var(--accent); }
+
+    .sec-head p {
+      margin-top: 14px;
+      color: var(--text-2);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ===== PROBLEM ===== */
+    .prob-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .prob-item {
+      background: var(--bg-2);
+      padding: 32px 28px;
+      transition: background .3s ease;
+    }
+
+    .prob-item:hover {
+      background: var(--bg-3);
+    }
+
+    .prob-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      color: var(--danger);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .prob-item h3 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .prob-item p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+    }
+
+    /* ===== PRODUCT ===== */
+    .product-section {
+      display: grid;
+      gap: 32px;
+    }
+
+    .principle-panel {
+      border-radius: var(--r-xl);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .principle-img-wrap {
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,.03);
+    }
+
+    .principle-img {
+      width: 100%;
+      filter: drop-shadow(0 12px 30px rgba(0,0,0,.35));
+    }
+
+    .principle-text {
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .principle-text h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      letter-spacing: -.02em;
+    }
+
+    .principle-text > p {
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .step-pair {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: var(--r-md);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+    }
+
+    .step-dot {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 16px;
+    }
+
+    .step-dot.store {
+      background: rgba(255,107,107,.12);
+      border: 1px solid rgba(255,107,107,.25);
+    }
+
+    .step-dot.release {
+      background: rgba(94,234,143,.12);
+      border: 1px solid rgba(94,234,143,.25);
+    }
+
+    .step b {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .step p {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+
+    .features-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .feat {
+      background: var(--bg-2);
+      padding: 24px 20px;
+      transition: background .3s ease;
+    }
+
+    .feat:hover { background: var(--bg-3); }
+
+    .feat-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(212,255,61,.2);
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
+
+    .feat h4 {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .feat p {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+
+    /* ===== VALIDATION ===== */
+    .val-split {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 20px;
+    }
+
+    .val-panel {
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 28px;
+    }
+
+    .val-panel h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .val-panel .sub {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+
+    .emg-chart {
+      height: 200px;
+      display: flex;
+      align-items: end;
+      gap: 20px;
+      padding: 28px 8px 36px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+
+    .emg-group {
+      flex: 1;
+      display: flex;
+      align-items: end;
+      gap: 6px;
+      justify-content: center;
+      position: relative;
+    }
+
+    .emg-bar {
+      width: 24px;
+      border-radius: 6px 6px 3px 3px;
+      position: relative;
+      animation: grow .8s ease both;
+      transform-origin: bottom;
+    }
+
+    @keyframes grow {
+      from { transform: scaleY(.05); opacity: .4; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    .emg-bar.bare {
+      background: linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.08));
+    }
+
+    .emg-bar.suited {
+      background: linear-gradient(180deg, var(--accent), rgba(212,255,61,.15));
+    }
+
+    .emg-bar .val {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .emg-bar.bare .val { color: var(--text-3); }
+    .emg-bar.suited .val { color: var(--accent); }
+
+    .emg-label {
+      position: absolute;
+      bottom: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: var(--text-2);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .emg-legend {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    .emg-legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .emg-legend .dot {
+      width: 8px; height: 8px;
+      border-radius: 3px;
+    }
+
+    .pilot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pilot-stat {
+      padding: 18px;
+      border-radius: var(--r-md);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+    }
+
+    .pilot-stat b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .pilot-stat span {
+      font-size: 11px;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .pilot-note {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: var(--r-md);
+      border: 1px solid rgba(125,245,201,.15);
+      background: rgba(125,245,201,.04);
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* ===== BENEFITS ===== */
+    .ben-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .ben-item {
+      background: var(--bg-2);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: background .3s ease;
+    }
+
+    .ben-item:hover { background: var(--bg-3); }
+
+    .ben-tag {
+      display: inline-flex;
+      align-self: start;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      margin-bottom: 16px;
+    }
+
+    .ben-tag.worker {
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .ben-tag.biz {
+      background: rgba(125,245,201,.1);
+      color: var(--accent-2);
+    }
+
+    .ben-item h3 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .ben-item > p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .ben-metrics {
+      display: flex;
+      gap: 24px;
+    }
+
+    .ben-metric b {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--accent);
+    }
+
+    .ben-metric.green b { color: var(--accent-2); }
+
+    .ben-metric span {
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    /* ===== PRICING ===== */
+    .price-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .price-card {
+      border-radius: var(--r-lg);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 28px;
+      transition: transform .3s ease, border-color .3s ease;
+    }
+
+    .price-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .price-card.featured {
+      border-color: rgba(212,255,61,.3);
+      background:
+        linear-gradient(135deg, rgba(212,255,61,.06), rgba(212,255,61,.01));
+    }
+
+    .price-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    .price-card.featured .price-label { color: var(--accent); }
+
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      margin-bottom: 4px;
+    }
+
+    .price-card.featured .price-amount { color: var(--accent); }
+
+    .price-unit {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    .price-card ul {
+      list-style: none;
+      display: grid;
+      gap: 7px;
+    }
+
+    .price-card li {
+      font-size: 12px;
+      color: var(--text-2);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .price-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ===== TRACTION ===== */
+    .traction {
+      display: grid;
+      gap: 0;
+    }
+
+    .tr-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tr-row:first-child { border-top: 1px solid var(--line); }
+
+    .tr-date {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .tr-date b {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .tr-date span {
+      font-size: 10px;
+      color: var(--text-3);
+      margin-top: 3px;
+    }
+
+    .tr-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+    }
+
+    .tr-item {
+      padding: 12px 14px;
+      border-radius: var(--r-md);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.4;
+      position: relative;
+    }
+
+    .tr-item.done {
+      border-color: rgba(94,234,143,.15);
+    }
+
+    .tr-item.done::after {
+      content: "✓";
+      position: absolute;
+      top: 10px; right: 10px;
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    .tr-item.progress {
+      border-color: rgba(255,201,77,.15);
+    }
+
+    .tr-item.progress::after {
+      content: "→";
+      position: absolute;
+      top: 10px; right: 10px;
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    .tr-item b {
+      display: block;
+      color: var(--text);
+      margin-bottom: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      padding-right: 16px;
+    }
+
+    /* ===== CTA ===== */
+    .cta {
+      padding: 80px 0 60px;
+    }
+
+    .cta-box {
+      border-radius: var(--r-xl);
+      background:
+        linear-gradient(135deg, rgba(212,255,61,.08), rgba(125,245,201,.03)),
+        radial-gradient(circle at 70% 30%, rgba(212,255,61,.1), transparent 40%);
+      border: 1px solid rgba(212,255,61,.2);
+      padding: 56px 40px;
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.8vw, 50px);
+      letter-spacing: -.05em;
+      line-height: 1;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .cta-box h2 .green { color: var(--accent); }
+
+    .cta-box p {
+      color: var(--text-2);
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto 26px;
+      line-height: 1.55;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btns .btn {
+      padding: 15px 26px;
+      font-size: 14px;
+    }
+
+    .cta-contact {
+      margin-top: 28px;
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .cta-contact a {
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 40px 0 50px;
+      border-top: 1px solid var(--line);
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--text-3);
+      font-size: 12px;
+    }
+
+    .footer .logo-img {
+      height: 36px;
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: .7s cubic-bezier(.22,1,.36,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1000px) {
+      .hero,
+      .principle-panel,
+      .val-split {
+        grid-template-columns: 1fr;
+      }
+      .nav { display: none; }
+      .prob-list,
+      .ben-grid,
+      .features-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+      .features-strip { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 24px, 1320px); }
+      .header-inner { height: auto; padding: 10px 0; }
+      .hero { padding-top: 80px; }
+      .prob-list,
+      .ben-grid,
+      .features-strip,
+      .price-row,
+      .pilot-grid {
+        grid-template-columns: 1fr;
+      }
+      .tr-row { grid-template-columns: 1fr; }
+      .tr-date { flex-direction: row; gap: 12px; }
+      .hero-specs { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="shell header-inner">
+      <a class="logo" href="#top">
+        <img class="logo-img" src="fortex-logo.png" alt="FORTEX" />
+        <span class="logo-text"><small data-i18n="nav_sub">Power at Work</small></span>
+      </a>
+      <nav class="nav">
+        <button class="active" data-jump="#hero" data-i18n="nav_home">首页</button>
+        <button data-jump="#problem" data-i18n="nav_problem">痛点</button>
+        <button data-jump="#product" data-i18n="nav_product">产品</button>
+        <button data-jump="#validation" data-i18n="nav_validation">验证</button>
+        <button data-jump="#benefits" data-i18n="nav_benefits">价值</button>
+        <button data-jump="#pricing" data-i18n="nav_pricing">价格</button>
+      </nav>
+      <div class="header-right">
+        <div class="lang">
+          <button data-lang="zh">中</button>
+          <button class="on" data-lang="en">EN</button>
+        </div>
+        <button class="btn-cta" data-jump="#cta" data-i18n="nav_cta">预约试点</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="shell hero" id="hero">
+      <div class="hero-left">
+        <span class="eyebrow" data-i18n="hero_eyebrow">PASSIVE SOFT EXOSUIT</span>
+        <h1 data-i18n-html="hero_title">The <span class="green">Invisible</span><br/><span class="thin">Strength.</span></h1>
+        <p class="hero-desc" data-i18n="hero_desc">
+          面向制造业一线工人的被动式软体外骨骼。弯曲储能、举释放能，无需电池即可降低 ~20% 肌肉负荷。像背包一样穿上，像盾牌一样工作。
+        </p>
+        <div class="hero-meta">
+          <div class="meta-item">
+            <b>&lt;1.5kg</b>
+            <span data-i18n="hero_m1">重量</span>
+          </div>
+          <div class="meta-item">
+            <b>~20%</b>
+            <span data-i18n="hero_m2">减载</span>
+          </div>
+          <div class="meta-item">
+            <b>Zero</b>
+            <span data-i18n="hero_m3">电池/电机/维护</span>
+          </div>
+          <div class="meta-item">
+            <b>450h+</b>
+            <span data-i18n="hero_m4">工厂实测</span>
+          </div>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-fill" data-jump="#cta" data-i18n="hero_btn1">预约工厂试点</button>
+          <button class="btn" data-jump="#product" data-i18n="hero_btn2">了解原理</button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="product-stage">
+          <span class="stage-tag" data-i18n="hero_tag">ALPHA 2.0</span>
+          <img class="product-img" src="product-prototype.png" alt="Fortex Exosuit Prototype" />
+          <span class="stage-label">Carbon Fiber · Kevlar Composite</span>
+        </div>
+        <div class="hero-specs">
+          <div class="spec-chip">
+            <b>18-20%</b>
+            <span data-i18n="spec_emg">EMG峰值降低</span>
+          </div>
+          <div class="spec-chip">
+            <b>99.9%</b>
+            <span data-i18n="spec_rel">触发可靠性</span>
+          </div>
+          <div class="spec-chip">
+            <b>4.2/5</b>
+            <span data-i18n="spec_comfort">舒适度评分</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROBLEM ===== -->
+    <section class="shell section reveal" id="problem">
+      <div class="sec-head">
+        <h2 data-i18n-html="prob_title">The High Cost of<br/><span class="green">Human Strain</span></h2>
+        <p data-i18n="prob_lead">您的工厂是否也在承受这些隐形损失？肌肉骨骼疾病每年造成巨额损失，传统方案要么无效，要么太贵。</p>
+      </div>
+      <div class="prob-list">
+        <div class="prob-item">
+          <div class="prob-num">15%</div>
+          <h3 data-i18n="prob_c1_t">下午产能下降</h3>
+          <p data-i18n="prob_c1_d">工人在"下午低谷"期间产能下降15%，搬运效率明显降低。疲劳累积直接影响当天产量和交期。</p>
+        </div>
+        <div class="prob-item">
+          <div class="prob-num" data-i18n="prob_c2_n">高离职</div>
+          <h3 data-i18n="prob_c2_t">人员流动与再培训</h3>
+          <p data-i18n="prob_c2_d">长期重复搬运导致慢性疲劳和职业损伤，工人流失率高。新员工培训周期长、适应慢，产能波动大。</p>
+        </div>
+        <div class="prob-item">
+          <div class="prob-num" data-i18n="prob_c3_n">工伤</div>
+          <h3 data-i18n="prob_c3_t">背部损伤赔偿风险</h3>
+          <p data-i18n="prob_c3_d">背部损伤是制造业首要职业性致残原因。单次工伤赔偿和误工成本可高达数万元，还伴随ESG合规压力。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRODUCT ===== -->
+    <section class="shell section reveal" id="product">
+      <div class="sec-head">
+        <h2 data-i18n-html="prod_title">Smartly Passive<br/><span class="green">Engineering</span></h2>
+        <p data-i18n="prod_lead">碳纤维与凯夫拉复合材料构成的储能系统，在弯腰时储存弹性势能，起身举重时释放能量辅助肌肉。每次弯举循环都在回收能量，不消耗任何电力。</p>
+      </div>
+
+      <div class="product-section">
+        <div class="principle-panel">
+          <div class="principle-img-wrap">
+            <img class="principle-img" src="principle-diagram.png" alt="Elastic Energy Storage Principle" />
+          </div>
+          <div class="principle-text">
+            <h3 data-i18n="principle_title">弹性储能原理</h3>
+            <p data-i18n="principle_desc">Fortex 作为一组外部人工肌肉，在工人弯腰时捕获能量、起身时释放能量。纯机械被动设计，无电子元件，不消耗任何电力。</p>
+            <div class="step-pair">
+              <div class="step">
+                <div class="step-dot store">⬇</div>
+                <div>
+                  <b data-i18n="step1_t">弯曲 · 储能</b>
+                  <p data-i18n="step1_d">弯腰时弹性元件被拉伸，捕获并储存弹性势能。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-dot release">⬆</div>
+                <div>
+                  <b data-i18n="step2_t">举起 · 释能</b>
+                  <p data-i18n="step2_d">起身时储存的能量释放，辅助肌肉发力，降低背部负荷。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="features-strip">
+          <div class="feat">
+            <div class="feat-icon">⚖</div>
+            <h4 data-i18n="feat1_t">轻量舒适</h4>
+            <p data-i18n="feat1_d">不到1.5公斤，透气面料，8小时连续佩戴无不适。</p>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">⚡</div>
+            <h4 data-i18n="feat2_t">零维护</h4>
+            <p data-i18n="feat2_d">无电池无电机，纯机械设计，几乎零维护成本。</p>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">↗</div>
+            <h4 data-i18n="feat3_t">即穿即用</h4>
+            <p data-i18n="feat3_d">像背包一样穿上，30秒调整，无需特殊培训。</p>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">🛡</div>
+            <h4 data-i18n="feat4_t">工业耐用</h4>
+            <p data-i18n="feat4_d">碳纤维+凯夫拉，目标寿命>50万次弯举循环。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VALIDATION ===== -->
+    <section class="shell section reveal" id="validation">
+      <div class="sec-head">
+        <h2 data-i18n-html="val_title">Validated<br/><span class="green">by Science</span></h2>
+        <p data-i18n="val_lead">不是概念，是经过验证的事实。生物力学对照实验 + 真实工厂4个月试点——数据证明 Fortex 确实有效。</p>
+      </div>
+
+      <div class="val-split">
+        <div class="val-panel">
+          <h3 data-i18n="val_emg_t">EMG 肌电峰值对比</h3>
+          <div class="sub" data-i18n="val_emg_s">对照实验数据</div>
+          <div class="emg-chart">
+            <div class="emg-group">
+              <div class="emg-bar bare" style="height:85%;"><span class="val">100%</span></div>
+              <div class="emg-bar suited" style="height:70%;"><span class="val">-18%</span></div>
+              <span class="emg-label" data-i18n="emg_back">背部伸肌</span>
+            </div>
+            <div class="emg-group">
+              <div class="emg-bar bare" style="height:80%;"><span class="val">100%</span></div>
+              <div class="emg-bar suited" style="height:72%;"><span class="val">-10.5%</span></div>
+              <span class="emg-label" data-i18n="emg_hip">髋部伸肌</span>
+            </div>
+            <div class="emg-group">
+              <div class="emg-bar bare" style="height:75%;"><span class="val">100%</span></div>
+              <div class="emg-bar suited" style="height:59%;"><span class="val">-22%</span></div>
+              <span class="emg-label" data-i18n="emg_fem">股直肌</span>
+            </div>
+            <div class="emg-group">
+              <div class="emg-bar bare" style="height:60%;"><span class="val">100%</span></div>
+              <div class="emg-bar suited" style="height:52%;"><span class="val">-14%</span></div>
+              <span class="emg-label" data-i18n="emg_abd">腹肌</span>
+            </div>
+          </div>
+          <div class="emg-legend">
+            <span><span class="dot" style="background:rgba(255,255,255,.25);"></span><span data-i18n="legend_bare">未穿戴</span></span>
+            <span><span class="dot" style="background:var(--accent);"></span>Fortex</span>
+          </div>
+        </div>
+
+        <div class="val-panel">
+          <h3 data-i18n="val_pilot_t">佛山工厂实测</h3>
+          <div class="sub" data-i18n="val_pilot_s">20+工人 · 4个月 · 450+小时</div>
+          <div class="pilot-grid">
+            <div class="pilot-stat">
+              <b>100%</b>
+              <span data-i18n="pilot_s1">工人反馈疲劳减轻</span>
+            </div>
+            <div class="pilot-stat">
+              <b>4.2/5</b>
+              <span data-i18n="pilot_s2">舒适度评分</span>
+            </div>
+            <div class="pilot-stat">
+              <b>450h</b>
+              <span data-i18n="pilot_s3">总测试时长</span>
+            </div>
+            <div class="pilot-stat">
+              <b>0</b>
+              <span data-i18n="pilot_s4">8小时佩戴不适</span>
+            </div>
+          </div>
+          <div class="pilot-note" data-i18n="pilot_note">
+            <strong style="color:var(--accent-2);" data-i18n="pilot_note_l">测试场景：</strong>20+名不同年龄和体型的工人，3-15kg物品搬运、>300-500次/天，连续测试1-3天。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BENEFITS ===== -->
+    <section class="shell section reveal" id="benefits">
+      <div class="sec-head">
+        <h2 data-i18n-html="ben_title">Why <span class="green">Fortex</span></h2>
+        <p data-i18n="ben_lead">对工人：保护健康、减轻疲劳。对企业：提升产能、降低工伤风险、强化ESG。一次投入，双向受益。</p>
+      </div>
+      <div class="ben-grid">
+        <div class="ben-item">
+          <span class="ben-tag worker" data-i18n="ben_w1_tag">FOR THE WORKER</span>
+          <h3 data-i18n="ben_w1_t">保护工人健康</h3>
+          <p data-i18n="ben_w1_d">显著降低背部肌肉负荷，减少慢性疲劳和职业性肌肉骨骼损伤风险。让工人下班后还有精力陪伴家人。</p>
+          <div class="ben-metrics">
+            <div class="ben-metric"><b>~20%</b><span data-i18n="ben_w1_m1">肌肉负荷降低</span></div>
+            <div class="ben-metric"><b data-i18n="ben_w1_m2_v">1wk</b><span data-i18n="ben_w1_m2">适应期缩短</span></div>
+          </div>
+        </div>
+        <div class="ben-item">
+          <span class="ben-tag biz" data-i18n="ben_e1_tag">FOR THE ENTERPRISE</span>
+          <h3 data-i18n="ben_e1_t">提升产能与效率</h3>
+          <p data-i18n="ben_e1_d">缓解"下午低谷"效应，维持全天稳定产出。减少因疲劳导致的效率下降和次品率上升。</p>
+          <div class="ben-metrics">
+            <div class="ben-metric green"><b>15%</b><span data-i18n="ben_e1_m1">产能损失减少</span></div>
+            <div class="ben-metric green"><b>500+</b><span data-i18n="ben_e1_m2">次/天适用</span></div>
+          </div>
+        </div>
+        <div class="ben-item">
+          <span class="ben-tag worker" data-i18n="ben_w2_tag">FOR THE WORKER</span>
+          <h3 data-i18n="ben_w2_t">舒适透气 · 无感佩戴</h3>
+          <p data-i18n="ben_w2_d">不到1.5公斤，透气面料，像背包一样贴合身体。8小时连续佩戴零不适，不影响正常工作动作。</p>
+          <div class="ben-metrics">
+            <div class="ben-metric"><b>&lt;1.5kg</b><span data-i18n="ben_w2_m1">轻量化</span></div>
+            <div class="ben-metric"><b>4.2/5</b><span data-i18n="ben_w2_m2">舒适评分</span></div>
+          </div>
+        </div>
+        <div class="ben-item">
+          <span class="ben-tag biz" data-i18n="ben_e2_tag">FOR THE ENTERPRISE</span>
+          <h3 data-i18n="ben_e2_t">降低工伤 · 强化ESG</h3>
+          <p data-i18n="ben_e2_d">直接降低材料搬运工伤率和赔偿成本。提升企业安全表现，助力ESG合规与社会责任报告。</p>
+          <div class="ben-metrics">
+            <div class="ben-metric green"><b>&lt;5%</b><span data-i18n="ben_e2_m1">工伤率目标</span></div>
+            <div class="ben-metric green"><b>ESG</b><span data-i18n="ben_e2_m2">指标提升</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRICING ===== -->
+    <section class="shell section reveal" id="pricing">
+      <div class="sec-head">
+        <h2 data-i18n-html="price_title">Simple <span class="green">Pricing</span></h2>
+        <p data-i18n="price_lead">灵活的采购方式，适配不同规模和预算。批量采购享阶梯折扣，也可先租后买降低试错成本。</p>
+      </div>
+      <div class="price-row">
+        <div class="price-card">
+          <div class="price-label" data-i18n="p_rent_l">租赁方案</div>
+          <div class="price-amount">$38<span style="font-size:16px;color:var(--text-3);" data-i18n="p_rent_unit">/mo</span></div>
+          <div class="price-unit" data-i18n="p_rent_u">先试后买 · 灵活低门槛</div>
+          <ul>
+            <li data-i18n="p_rent_f1">最低门槛，降低试错风险</li>
+            <li data-i18n="p_rent_f2">先验证效果再扩大规模</li>
+            <li data-i18n="p_rent_f3">含基础维护与更换服务</li>
+            <li data-i18n="p_rent_f4">可随时转为采购模式</li>
+          </ul>
+        </div>
+        <div class="price-card featured">
+          <div class="price-label" data-i18n="p_buy_l">标准采购</div>
+          <div class="price-amount">$292<span style="font-size:16px;color:var(--text-3);" data-i18n="p_buy_unit">/unit</span></div>
+          <div class="price-unit" data-i18n="p_buy_u">一次性买断 · 12-18个月回本</div>
+          <ul>
+            <li data-i18n="p_buy_f1">含质检与保修</li>
+            <li data-i18n="p_buy_f2">5-10台享5%折扣</li>
+            <li data-i18n="p_buy_f3">10-50台享10%折扣</li>
+            <li data-i18n="p_buy_f4">50台以上享15%折扣</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="price-label" data-i18n="p_pilot_l">试点合作</div>
+          <div class="price-amount">$200<span style="font-size:16px;color:var(--text-3);" data-i18n="p_pilot_unit">/unit</span></div>
+          <div class="price-unit" data-i18n="p_pilot_u">灯塔工厂专属 · 限额招募</div>
+          <ul>
+            <li data-i18n="p_pilot_f1">首批试点专属价格</li>
+            <li data-i18n="p_pilot_f2">联合品牌案例研究</li>
+            <li data-i18n="p_pilot_f3">ESG报告数据支持</li>
+            <li data-i18n="p_pilot_f4">优先获得产品迭代升级</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRACTION ===== -->
+    <section class="shell section reveal" id="traction">
+      <div class="sec-head">
+        <h2 data-i18n-html="tr_title">Proven <span class="green">Traction</span></h2>
+        <p data-i18n="tr_lead">我们不是在卖概念——Fortex 已经在真实工厂里运行了450+小时，并签下了40台的采购意向书。</p>
+      </div>
+      <div class="traction">
+        <div class="tr-row">
+          <div class="tr-date">
+            <b>2026.03</b>
+            <span data-i18n="tr_done">已完成</span>
+          </div>
+          <div class="tr-items">
+            <div class="tr-item done">
+              <b data-i18n="tr_m1_t">Alpha 2.0 原型</b>
+              <span data-i18n="tr_m1_d">3D打印+缝制+工厂测试全流程打通</span>
+            </div>
+            <div class="tr-item done">
+              <b data-i18n="tr_m2_t">佛山工厂试点</b>
+              <span data-i18n="tr_m2_d">20+工人 · 4个月 · 450+小时</span>
+            </div>
+            <div class="tr-item done">
+              <b data-i18n="tr_m3_t">LOI签署</b>
+              <span data-i18n="tr_m3_d">佛山家具工厂40台意向书</span>
+            </div>
+          </div>
+        </div>
+        <div class="tr-row">
+          <div class="tr-date">
+            <b>2026.Q3</b>
+            <span data-i18n="tr_progress">进行中</span>
+          </div>
+          <div class="tr-items">
+            <div class="tr-item progress">
+              <b data-i18n="tr_m4_t">Beta原型迭代</b>
+              <span data-i18n="tr_m4_d">基于试点反馈优化，准备量产样品</span>
+            </div>
+            <div class="tr-item progress">
+              <b data-i18n="tr_m5_t">灯塔工厂招募</b>
+              <span data-i18n="tr_m5_d">2家转介绍工厂洽谈中</span>
+            </div>
+            <div class="tr-item progress">
+              <b data-i18n="tr_m6_t">安全认证</b>
+              <span data-i18n="tr_m6_d">启动产品安全标准认证</span>
+            </div>
+          </div>
+        </div>
+        <div class="tr-row">
+          <div class="tr-date">
+            <b>2027+</b>
+            <span data-i18n="tr_planned">计划中</span>
+          </div>
+          <div class="tr-items">
+            <div class="tr-item">
+              <b data-i18n="tr_m7_t">首批量产交付</b>
+              <span data-i18n="tr_m7_d">40台交付灯塔工厂</span>
+            </div>
+            <div class="tr-item">
+              <b data-i18n="tr_m8_t">展会亮相</b>
+              <span data-i18n="tr_m8_d">CIIF工展会首秀</span>
+            </div>
+            <div class="tr-item">
+              <b data-i18n="tr_m9_t">规模化推广</b>
+              <span data-i18n="tr_m9_d">覆盖更多工业集群</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="shell cta reveal" id="cta">
+      <div class="cta-box">
+        <h2 data-i18n-html="cta_title">Ready to <span class="green">Empower</span><br/>Your Workforce?</h2>
+        <p data-i18n="cta_desc">我们正在招募2-3家灯塔工厂合作伙伴，参与2026年Q3试点。首批试点价格$200/台，含联合品牌案例研究和ESG报告支持。名额有限，先到先得。</p>
+        <div class="cta-btns">
+          <button class="btn btn-fill" data-jump="#cta" data-i18n="cta_btn1">预约工厂试点</button>
+          <button class="btn" data-i18n="cta_btn2">联系我们</button>
+        </div>
+        <div class="cta-contact">
+          <span>📧 <a href="mailto:foreveryc_0331@163.com">foreveryc_0331@163.com</a></span>
+          <span>📞 +86 173 2102 3702</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="shell footer">
+    <div class="logo">
+      <img class="logo-img" src="fortex-logo.png" alt="FORTEX" />
+    </div>
+    <span data-i18n="footer_copy">© 2026 Fortex Team · Passive Soft Exosuit · Power at Work</span>
+  </footer>
+
+  <!-- ===== I18N ===== -->
+  <script>
+    const i18n = {
+      zh: {
+        nav_sub: "工作中的力量 · 工业外骨骼",
+        nav_home: "首页", nav_problem: "痛点", nav_product: "产品",
+        nav_validation: "验证", nav_benefits: "价值", nav_pricing: "价格", nav_cta: "预约试点",
+        hero_eyebrow: "被动式软体外骨骼 · 面向一线工人",
+        hero_title: '隐形的<br/><span class="green">力量</span>',
+        hero_desc: "面向制造业一线工人的被动式软体外骨骼。弯曲储能、举释放能，无需电池即可降低 ~20% 肌肉负荷。像背包一样穿上，像盾牌一样工作。",
+        hero_m1: "重量", hero_m2: "减载", hero_m3: "电池/电机/维护", hero_m4: "工厂实测",
+        hero_tag: "ALPHA 2.0",
+        hero_btn1: "预约工厂试点", hero_btn2: "了解原理",
+        spec_emg: "肌电峰值降低", spec_rel: "触发可靠性", spec_comfort: "舒适度评分",
+        prob_title: '人体劳损的<br/><span class="green">隐形代价</span>',
+        prob_lead: "您的工厂是否也在承受这些隐形损失？肌肉骨骼疾病每年造成巨额损失，传统方案要么无效，要么太贵。",
+        prob_c1_t: "下午产能下降",
+        prob_c1_d: "工人在\"下午低谷\"期间产能下降15%，搬运效率明显降低。疲劳累积直接影响当天产量和交期。",
+        prob_c2_n: "高离职", prob_c2_t: "人员流动与再培训",
+        prob_c2_d: "长期重复搬运导致慢性疲劳和职业损伤，工人流失率高。新员工培训周期长、适应慢，产能波动大。",
+        prob_c3_n: "工伤", prob_c3_t: "背部损伤赔偿风险",
+        prob_c3_d: "背部损伤是制造业首要职业性致残原因。单次工伤赔偿和误工成本可高达数万元，还伴随ESG合规压力。",
+        prod_title: '巧妙的被动式<br/><span class="green">工程设计</span>',
+        prod_lead: "碳纤维与凯夫拉复合材料构成的储能系统，在弯腰时储存弹性势能，起身举重时释放能量辅助肌肉。每次弯举循环都在回收能量，不消耗任何电力。",
+        principle_title: "弹性储能原理",
+        principle_desc: "Fortex 作为一组外部人工肌肉，在工人弯腰时捕获能量、起身时释放能量。纯机械被动设计，无电子元件，不消耗任何电力。",
+        step1_t: "弯曲 · 储能", step1_d: "弯腰时弹性元件被拉伸，捕获并储存弹性势能。",
+        step2_t: "举起 · 释能", step2_d: "起身时储存的能量释放，辅助肌肉发力，降低背部负荷。",
+        feat1_t: "轻量舒适", feat1_d: "不到1.5公斤，透气面料，8小时连续佩戴无不适。",
+        feat2_t: "零维护", feat2_d: "无电池无电机，纯机械设计，几乎零维护成本。",
+        feat3_t: "即穿即用", feat3_d: "像背包一样穿上，30秒调整，无需特殊培训。",
+        feat4_t: "工业耐用", feat4_d: "碳纤维+凯夫拉，目标寿命>50万次弯举循环。",
+        val_title: '科学<br/><span class="green">验证</span>',
+        val_lead: "不是概念，是经过验证的事实。生物力学对照实验 + 真实工厂4个月试点——数据证明 Fortex 确实有效。",
+        val_emg_t: "肌电峰值对比", val_emg_s: "对照实验数据",
+        emg_back: "背部伸肌", emg_hip: "髋部伸肌", emg_fem: "股直肌", emg_abd: "腹肌",
+        legend_bare: "未穿戴",
+        val_pilot_t: "佛山工厂实测", val_pilot_s: "20+工人 · 4个月 · 450+小时",
+        pilot_s1: "工人反馈疲劳减轻", pilot_s2: "舒适度评分", pilot_s3: "总测试时长", pilot_s4: "8小时佩戴不适",
+        pilot_note_l: "测试场景：",
+        pilot_note: "<strong style=\"color:var(--accent-2);\">测试场景：</strong>20+名不同年龄和体型的工人，3-15kg物品搬运、>300-500次/天，连续测试1-3天。",
+        ben_title: '为什么选择<span class="green"> Fortex</span>',
+        ben_lead: "对工人：保护健康、减轻疲劳。对企业：提升产能、降低工伤风险、强化ESG。一次投入，双向受益。",
+        ben_w1_tag: "对工人", ben_w1_t: "保护工人健康",
+        ben_w1_d: "显著降低背部肌肉负荷，减少慢性疲劳和职业性肌肉骨骼损伤风险。让工人下班后还有精力陪伴家人。",
+        ben_w1_m1: "肌肉负荷降低", ben_w1_m2: "适应期缩短", ben_w1_m2_v: "1周",
+        ben_e1_tag: "对企业", ben_e1_t: "提升产能与效率",
+        ben_e1_d: "缓解\"下午低谷\"效应，维持全天稳定产出。减少因疲劳导致的效率下降和次品率上升。",
+        ben_e1_m1: "产能损失减少", ben_e1_m2: "次/天适用",
+        ben_w2_tag: "对工人", ben_w2_t: "舒适透气 · 无感佩戴",
+        ben_w2_d: "不到1.5公斤，透气面料，像背包一样贴合身体。8小时连续佩戴零不适，不影响正常工作动作。",
+        ben_w2_m1: "轻量化", ben_w2_m2: "舒适评分",
+        ben_e2_tag: "对企业", ben_e2_t: "降低工伤 · 强化ESG",
+        ben_e2_d: "直接降低材料搬运工伤率和赔偿成本。提升企业安全表现，助力ESG合规与社会责任报告。",
+        ben_e2_m1: "工伤率目标", ben_e2_m2: "指标提升",
+        price_title: '简洁<span class="green">定价</span>',
+        price_lead: "灵活的采购方式，适配不同规模和预算。批量采购享阶梯折扣，也可先租后买降低试错成本。",
+        p_rent_l: "租赁方案", p_rent_u: "先试后买 · 灵活低门槛", p_rent_unit: "/月",
+        p_rent_f1: "最低门槛，降低试错风险", p_rent_f2: "先验证效果再扩大规模",
+        p_rent_f3: "含基础维护与更换服务", p_rent_f4: "可随时转为采购模式",
+        p_buy_l: "标准采购", p_buy_u: "一次性买断 · 12-18个月回本", p_buy_unit: "/台",
+        p_buy_f1: "含质检与保修", p_buy_f2: "5-10台享5%折扣",
+        p_buy_f3: "10-50台享10%折扣", p_buy_f4: "50台以上享15%折扣",
+        p_pilot_l: "试点合作", p_pilot_u: "灯塔工厂专属 · 限额招募", p_pilot_unit: "/台",
+        p_pilot_f1: "首批试点专属价格", p_pilot_f2: "联合品牌案例研究",
+        p_pilot_f3: "ESG报告数据支持", p_pilot_f4: "优先获得产品迭代升级",
+        tr_title: '已验证的<span class="green">市场进展</span>',
+        tr_lead: "我们不是在卖概念——Fortex 已经在真实工厂里运行了450+小时，并签下了40台的采购意向书。",
+        tr_done: "已完成", tr_progress: "进行中", tr_planned: "计划中",
+        tr_m1_t: "Alpha 2.0 原型", tr_m1_d: "3D打印+缝制+工厂测试全流程打通",
+        tr_m2_t: "佛山工厂试点", tr_m2_d: "20+工人 · 4个月 · 450+小时",
+        tr_m3_t: "采购意向书签署", tr_m3_d: "佛山家具工厂40台意向书",
+        tr_m4_t: "Beta原型迭代", tr_m4_d: "基于试点反馈优化，准备量产样品",
+        tr_m5_t: "灯塔工厂招募", tr_m5_d: "2家转介绍工厂洽谈中",
+        tr_m6_t: "安全认证", tr_m6_d: "启动产品安全标准认证",
+        tr_m7_t: "首批量产交付", tr_m7_d: "40台交付灯塔工厂",
+        tr_m8_t: "展会亮相", tr_m8_d: "中国国际工业博览会首秀",
+        tr_m9_t: "规模化推广", tr_m9_d: "覆盖更多工业集群",
+        cta_title: '准备好<span class="green">赋能</span><br/>您的团队了吗？',
+        cta_desc: "我们正在招募2-3家灯塔工厂合作伙伴，参与2026年第三季度试点。首批试点价格$200/台，含联合品牌案例研究和ESG报告支持。名额有限，先到先得。",
+        cta_btn1: "预约工厂试点", cta_btn2: "联系我们",
+        footer_copy: "© 2026 Fortex 团队 · 被动式软体外骨骼 · 工作中的力量"
+      },
+      en: {
+        nav_sub: "Power at Work · Industrial Exosuit",
+        nav_home: "Home", nav_problem: "Pain Points", nav_product: "Product",
+        nav_validation: "Validation", nav_benefits: "Benefits", nav_pricing: "Pricing", nav_cta: "Request Pilot",
+        hero_eyebrow: "PASSIVE SOFT EXOSUIT · For Frontline Workers",
+        hero_title: 'The <span class="green">Invisible</span><br/><span class="thin">Strength.</span>',
+        hero_desc: "A passive soft exosuit for manufacturing frontline workers. It captures energy during bending and releases it during lifting — reducing ~20% muscle load with zero batteries. Wear it like a backpack, work behind a shield.",
+        hero_m1: "Weight", hero_m2: "Load Reduction", hero_m3: "Batteries/Motors", hero_m4: "Factory Pilot",
+        hero_tag: "ALPHA 2.0",
+        hero_btn1: "Request Factory Pilot", hero_btn2: "How It Works",
+        spec_emg: "EMG Peak Reduction", spec_rel: "Trigger Reliability", spec_comfort: "Comfort Rating",
+        prob_title: 'The High Cost of<br/><span class="green">Human Strain</span>',
+        prob_lead: "Is your factory bearing these hidden costs? MSDs cause massive losses every year — traditional solutions are either ineffective or too expensive.",
+        prob_c1_t: "Afternoon Productivity Drop",
+        prob_c1_d: "Workers experience 15% productivity loss during the \"afternoon dip.\" Fatigue accumulation directly impacts daily output and delivery schedules.",
+        prob_c2_n: "High Turnover", prob_c2_t: "Attrition & Retraining",
+        prob_c2_d: "Chronic fatigue from repetitive lifting leads to high worker turnover. New hire training is slow and costly, causing production volatility.",
+        prob_c3_n: "Injury", prob_c3_t: "Back Injury Liability",
+        prob_c3_d: "Back injuries are the leading cause of occupational disability in manufacturing. A single injury claim can cost tens of thousands, plus ESG compliance pressure.",
+        prod_title: 'Smartly Passive<br/><span class="green">Engineering</span>',
+        prod_lead: "Carbon fiber and Kevlar composite energy storage system stores elastic potential energy during bending, then releases it to assist muscles during lifting. Every bend-lift cycle recycles energy — zero electricity consumed.",
+        principle_title: "Elastic Energy Storage",
+        principle_desc: "Fortex functions as external artificial muscles — capturing energy during bending and releasing it during lifting. Pure mechanical passive design, no electronic components, zero electricity consumed.",
+        step1_t: "Bend · Store", step1_d: "Elastic elements stretch during bending, capturing and storing elastic potential energy.",
+        step2_t: "Lift · Release", step2_d: "Stored energy releases during lifting, assisting muscle force and reducing back load.",
+        feat1_t: "Lightweight", feat1_d: "Under 1.5kg, breathable fabric, zero discomfort in 8-hour wear.",
+        feat2_t: "Zero Maintenance", feat2_d: "No batteries, no motors, pure mechanical design, near-zero maintenance.",
+        feat3_t: "Plug & Wear", feat3_d: "Put on like a backpack, 30-second adjustment, no training needed.",
+        feat4_t: "Industrial Grade", feat4_d: "Carbon fiber + Kevlar, target lifespan >500K bend-lift cycles.",
+        val_title: 'Validated<br/><span class="green">by Science</span>',
+        val_lead: "Not a concept — a proven fact. Biomechanical controlled study + 4-month real factory pilot. The data proves Fortex works.",
+        val_emg_t: "Peak EMG Comparison", val_emg_s: "Controlled study data",
+        emg_back: "Back Extensors", emg_hip: "Hip Extensors", emg_fem: "Rectus Femoris", emg_abd: "Abdominals",
+        legend_bare: "No Exosuit",
+        val_pilot_t: "Foshan Factory Pilot", val_pilot_s: "20+ workers · 4 months · 450+ hours",
+        pilot_s1: "Reported Reduced Fatigue", pilot_s2: "Comfort Rating", pilot_s3: "Total Pilot Hours", pilot_s4: "Discomfort Issues (8h)",
+        pilot_note_l: "Test Scenario: ",
+        pilot_note: "<strong style=\"color:var(--accent-2);\">Test Scenario:</strong> 20+ workers across diverse ages and body types, 3-15kg lifts at >300-500 lifts/day, tested over 1-3 days.",
+        ben_title: 'Why <span class="green">Fortex</span>',
+        ben_lead: "For workers: protect health, reduce fatigue. For enterprises: boost productivity, reduce injury risk, strengthen ESG. One investment, dual benefits.",
+        ben_w1_tag: "FOR THE WORKER", ben_w1_t: "Protect Worker Health",
+        ben_w1_d: "Significantly reduces back muscle load, mitigating chronic fatigue and occupational MSD risk. Workers go home with energy for their families.",
+        ben_w1_m1: "Muscle Load Reduction", ben_w1_m2: "Faster Adaptation", ben_w1_m2_v: "1wk",
+        ben_e1_tag: "FOR THE ENTERPRISE", ben_e1_t: "Boost Productivity",
+        ben_e1_d: "Mitigates \"afternoon dip\" effect, maintains stable all-day output. Reduces efficiency loss and defect rate caused by fatigue.",
+        ben_e1_m1: "Productivity Loss Reduced", ben_e1_m2: "Lifts/day Fit",
+        ben_w2_tag: "FOR THE WORKER", ben_w2_t: "Comfortable & Breathable",
+        ben_w2_d: "Under 1.5kg, breathable fabric, fits like a backpack. Zero discomfort in 8-hour continuous wear, doesn't restrict movement.",
+        ben_w2_m1: "Lightweight", ben_w2_m2: "Comfort Score",
+        ben_e2_tag: "FOR THE ENTERPRISE", ben_e2_t: "Reduce Injury · Strengthen ESG",
+        ben_e2_d: "Directly reduces material handling injury rates and compensation costs. Improves safety performance, supports ESG compliance.",
+        ben_e2_m1: "Injury Rate Target", ben_e2_m2: "ESG Boost",
+        price_title: 'Simple <span class="green">Pricing</span>',
+        price_lead: "Flexible purchasing options for different scales and budgets. Volume discounts available, or try-before-you-buy with rental.",
+        p_rent_l: "RENTAL", p_rent_u: "Try before buy · Low barrier", p_rent_unit: "/mo",
+        p_rent_f1: "Lowest entry barrier, reduce trial risk", p_rent_f2: "Validate results before scaling",
+        p_rent_f3: "Includes basic maintenance & replacement", p_rent_f4: "Can convert to purchase anytime",
+        p_buy_l: "STANDARD PURCHASE", p_buy_u: "One-time buy · 12-18mo payback", p_buy_unit: "/unit",
+        p_buy_f1: "Includes QC & warranty", p_buy_f2: "5-10 units: 5% discount",
+        p_buy_f3: "10-50 units: 10% discount", p_buy_f4: "50+ units: 15% discount",
+        p_pilot_l: "PILOT PARTNERSHIP", p_pilot_u: "Lighthouse factory exclusive · Limited", p_pilot_unit: "/unit",
+        p_pilot_f1: "Exclusive pilot pricing", p_pilot_f2: "Co-branding case study",
+        p_pilot_f3: "ESG reporting data support", p_pilot_f4: "Priority access to upgrades",
+        tr_title: 'Proven <span class="green">Traction</span>',
+        tr_lead: "We're not selling a concept — Fortex has already run 450+ hours in real factories and signed LOIs for 40 units.",
+        tr_done: "Completed", tr_progress: "In Progress", tr_planned: "Planned",
+        tr_m1_t: "Alpha 2.0 Prototype", tr_m1_d: "3D printing + sewing + factory testing pipeline",
+        tr_m2_t: "Foshan Factory Pilot", tr_m2_d: "20+ workers · 4 months · 450+ hours",
+        tr_m3_t: "LOI Signed", tr_m3_d: "Foshan furniture factory: 40 units",
+        tr_m4_t: "Beta Prototype", tr_m4_d: "Optimizing based on pilot feedback",
+        tr_m5_t: "Lighthouse Recruitment", tr_m5_d: "2 referral factories in discussion",
+        tr_m6_t: "Safety Certification", tr_m6_d: "Initiating product safety certification",
+        tr_m7_t: "First Batch Delivery", tr_m7_d: "40 units delivered to lighthouse factories",
+        tr_m8_t: "Trade Show Debut", tr_m8_d: "CIIF debut, expanding channels",
+        tr_m9_t: "Scale Expansion", tr_m9_d: "Covering more industrial clusters",
+        cta_title: 'Ready to <span class="green">Empower</span><br/>Your Workforce?',
+        cta_desc: "We're recruiting 2-3 lighthouse factory partners for Q3 2026 pilot. Pilot pricing at $200/unit, including co-branding case study and ESG reporting support. Limited spots — first come, first served.",
+        cta_btn1: "Request Factory Pilot", cta_btn2: "Contact Us",
+        footer_copy: "© 2026 Fortex Team · Passive Soft Exosuit · Power at Work"
+      }
+    };
+
+    let lang = "en";
+
+    function applyLang(l) {
+      lang = l;
+      const d = i18n[l];
+      document.documentElement.lang = l === "zh" ? "zh-CN" : "en";
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.dataset.i18n;
+        if (d[k] !== undefined) {
+          if (d[k].includes("<")) el.innerHTML = d[k];
+          else el.textContent = d[k];
+        }
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const k = el.dataset.i18nHtml;
+        if (d[k] !== undefined) el.innerHTML = d[k];
+      });
+      document.querySelectorAll(".lang button").forEach(b => {
+        b.classList.toggle("on", b.dataset.lang === l);
+      });
+    }
+
+    document.querySelectorAll(".lang button").forEach(b => {
+      b.addEventListener("click", () => applyLang(b.dataset.lang));
+    });
+
+    document.querySelectorAll("[data-jump]").forEach(b => {
+      b.addEventListener("click", () => {
+        const t = document.querySelector(b.dataset.jump);
+        if (t) t.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    const sections = document.querySelectorAll("section[id]");
+    const navBtns = document.querySelectorAll(".nav button[data-jump]");
+    window.addEventListener("scroll", () => {
+      let cur = "";
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+      });
+      navBtns.forEach(b => b.classList.toggle("active", b.dataset.jump === "#" + cur));
+    });
+
+    const obs = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+
+    applyLang("en");
+  </script>
+</body>
+</html>
